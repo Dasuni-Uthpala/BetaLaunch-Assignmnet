@@ -1,1 +1,1 @@
-# BetaLaunch-Assignmnet
+# BetaLaunch-Assignment
