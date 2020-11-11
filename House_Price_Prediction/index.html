@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>House Price</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700&display=swap&subset=latin-ext" rel="stylesheet">
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <link href="../css/fontawesome-all.css" rel="stylesheet">
+    <link href="../css/swiper.css" rel="stylesheet">
+	<link href="../css/magnific-popup.css" rel="stylesheet">
+	<link href="../css/styles.css" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.8.10/brython.min.js">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.8.10/brython_stdlib.min.js">
+</script>
+
+
+</head>
+<body onload="brython()" data-spy="scroll" data-target=".fixed-top">
+
+    <header id="header" class="header">
+        <div class="header-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-xl-5">
+                    </div>
+                    <div class="col-lg-6 col-xl-7">
+                        <div class="image-container">
+                            <div class="img-wrapper">
+                                <img class="img-fluid" src="../images/wall3.jpg" width="400" height="400" alt="alternative">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <svg class="header-frame" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" viewBox="0 0 1920 310"><defs><style>.cls-1{fill:#5f4def;}</style></defs><title>header-frame</title><path class="cls-1" d="M0,283.054c22.75,12.98,53.1,15.2,70.635,14.808,92.115-2.077,238.3-79.9,354.895-79.938,59.97-.019,106.17,18.059,141.58,34,47.778,21.511,47.778,21.511,90,38.938,28.418,11.731,85.344,26.169,152.992,17.971,68.127-8.255,115.933-34.963,166.492-67.393,37.467-24.032,148.6-112.008,171.753-127.963,27.951-19.26,87.771-81.155,180.71-89.341,72.016-6.343,105.479,12.388,157.434,35.467,69.73,30.976,168.93,92.28,256.514,89.405,100.992-3.315,140.276-41.7,177-64.9V0.24H0V283.054Z"/></svg>
+
+
+    <div id="body">
+
+                    <div id=result>
+
+                 <p> {{pred}}</p>
+                </div>
+
+
+      <div class=form>
+           <form action="/predict" method="post">
+          <table>
+
+              <tr>
+                  <td><label class='select_label'>MSSubClass: Identifies the type of dwelling involved in the sale.</label></td>
+                  <td>
+                      <Select id='four_story' name='four_story'>
+                          <option selected value='20'>1-STORY 1946 & NEWER ALL STYLES</option>
+                          <option value='30'>1-STORY 1945 & OLDER</option>
+                          <option value='40'>1-STORY W/FINISHED ATTIC ALL AGES</option>
+                          <option value='45'>1-1/2 STORY - UNFINISHED ALL AGES</option>
+                          <option value='50'>1-1/2 STORY FINISHED ALL AGES</option>
+                          <option value='60'>2-STORY 1946 & NEWER</option>
+                          <option value='70'>2-STORY 1945 & OLDER</option>
+                          <option value='75'>2-1/2 STORY ALL AGES/option>
+                          <option value='80'>SPLIT OR MULTI-LEVEL</option>
+                          <option value='85'>SPLIT FOYER</option>
+                          <option value='90'>DUPLEX - ALL STYLES AND AGES</option>
+                          <option value='120'>1-STORY PUD (Planned Unit Development) - 1946 & NEWER</option>
+                          <option value='150'>1-1/2 STORY PUD - ALL AGES</option>
+                           <option value='160'>2-STORY PUD - 1946 & NEWER/option>
+                           <option value='180'>PUD - MULTILEVEL - INCL SPLIT LEV/FOYER/option>
+                          <option value="190" >2 FAMILY CONVERSION - ALL STYLES AND AGES</option>
+            </Select></td>
+              </tr>
+
+              <tr>
+                  <td><label class='select_label'>MSZoning: Identifies the general zoning classification of the sale.</label></td>
+                  <td>
+                      <Select id='one_story' name='one_story'>
+                          <option selected value="A">Agriculture</option>
+                          <option value="C">Commercial</option>
+                          <option value='FV'>Floating Village Residential</option>
+                          <option value='I'>Industrial</option>
+                          <option value='RH'>Residential High Density</option>
+                          <option value='RL'>Residential Low Density</option>
+                          <option value='RP'>Residential Low Density Park</option>
+                          <option value='RM'>Residential Medium Density</option>
+                      </Select>
+                  </td>
+              </tr>
+
+              <tr>
+                  <td><label class='select_label'>LotFrontage: Linear feet of street connected to property</label></td>
+                  <td>
+                    <input type="number" placeholder="Enter LotFrontage here" id='LotFrontage' name='LotFrontage'><br>
+                  </td>
+              </tr>
+
+               <tr>
+                  <td><label class='select_label'>LotArea: Lot size in square feet</label></td>
+                  <td>
+                    <input type="number" placeholder="Enter LotArea here" id='LotArea' name='LotArea'><br>
+                  </td>
+              </tr>
+
+              <tr>
+                  <td><label class='select_label'>Street: Type of road access to property</label></td>
+                  <td>
+                    <Select id='Street' name='three_story'>
+                            <option selected value='Grvl'>Gravel</option>
+                          <option value='Pave'>Paved</option>
+                      </Select>
+                  </td>
+              </tr>
+
+              <tr>
+                  <td><label class='select_label'>Alley: Type of alley access to property</label></td>
+                  <td>
+                      <Select id='Alley' name='three_story'>
+                          <option selected value='Grvl'>Gravel</option>
+                          <option value='Pave'>Paved</option>
+                          <option value='NA'>No alley access</option>
+
+                      </Select>
+                  </td>
+              </tr>
+
+              <tr>
+                  <td><label class='select_label'>LotShape: General shape of property</label></td>
+                  <td>
+                      <Select id='LotShape' name='three_story'>
+                            <option value='reg'>Regular</option>
+                          <option value='IR1'>Slightly irregular</option>
+                          <option value='IR1'>Moderately Irregular</option>
+                          <option value='IR3'>Irregular</option>
+                      </Select>
+                  </td>
+              </tr>
+
+              <tr>
+                  <td><label class='select_label'>LandContour: Flatness of the property</label></td>
+                  <td>
+                      <Select id='LandContour' name='three_story'>
+                            <option value='Lvl'>Near Flat/Level</option>
+                          <option value='Bnk'>Banked - Quick and significant rise from street grade to building</option>
+                          <option value='HLS'>Hillside - Significant slope from side to side</option>
+                          <option value='Low'>Depression</option>
+                      </Select>
+                  </td>
+              </tr>
+
+              <tr>
+                  <td><label class='select_label'>Utilities: Type of utilities available</label></td>
+                  <td>
+                      <Select id='Utilities' name='three_story'>
+                            <option value='AllPub'>All public Utilities (E,G,W,& S)</option>
+                          <option value='NoSewr'>Electricity, Gas, and Water (Septic Tank)</option>
+                          <option value='NoSeWa'>Electricity and Gas Only</option>
+                          <option value='ELO'>Electricity only</option>
+                      </Select>
+                  </td>
+              </tr>
+
+              <tr>
+                  <td><label class='select_label'>LotConfig: Lot configuration</label></td>
+                  <td>
+                      <Select id='LotConfig' name='three_story'>
+                            <option value='Inside'>Inside lot</option>
+                          <option value='Corner'>Corner lot</option>
+                          <option value='CulDSac'>Cul-de-sac</option>
+                          <option value='FR2'>Frontage on 2 sides of property</option>
+                          <option value='FR3'>Frontage on 3 sides of property</option>
+                      </Select>
+                  </td>
+              </tr>
+
+
+              <tr>
+                  <td><label class='select_label'>LandSlope: Slope of property</label></td>
+                  <td>
+                      <Select id='LandSlope' name='three_story'>
+                            <option value='Gtl'>Gentle slope</option>
+                          <option value='Mod'>Moderate Slope</option>
+                          <option value='Sev'>Severe Slope</option>
+                      </Select>
+                  </td>
+              </tr>
+
+              <tr>
+                  <td><label class='select_label'>Neighborhood: Physical locations within Ames city limits
+</label></td>
+                  <td>
+                      <Select id='Neighborhood' name='three_story'>
+                            <option value='Gtl'>Bloomington Heights</option>
+                          <option value='Mod'>Bluestem</option>
+                           <option value='Mod'>Bluestem</option>
+                           <option value='Mod'>Brookside</option>
+                           <option value='Mod'>Clear Creek</option>
+                           <option value='Mod'>College Creek</option>
+                           <option value='Mod'>Crawford</option>
+                           <option value='Mod'>Edwards</option>
+                           <option value='Mod'>Gilbert</option>
+                           <option value='Mod'>Iowa DOT and Rail Road</option>
+                           <option value='Mod'>Meadow Village</option>
+                           <option value='Mod'>Mitchell</option>
+                           <option value='Mod'>North Ames</option>
+                           <option value='Mod'>Northridge</option>
+                           <option value='Mod'>Northpark Villa</option>
+                           <option value='Mod'>Northridge Heights</option>
+                           <option value='Mod'>Northwest Ames</option>
+                           <option value='Mod'>Old Town</option>
+                           <option value='Mod'>South & West of Iowa State University</option>
+                           <option value='Mod'>Sawyer</option>
+                          <option value='Mod'>Sawyer West</option>
+                          <option value='Mod'>Somerset</option>
+                          <option value='Mod'>Stone Brook</option>
+                          <option value='Mod'>Timberland</option>
+                          <option value='Mod'>Veenker</option>
+                      </Select>
+                  </td>
+              </tr>
+
+              <tr>
+                  <td><label class='select_label'>Condition1: Proximity to various conditions</label></td>
+                  <td>
+                      <Select id='Condition1' name='three_story'>
+                            <option value='Gtl'>Gentle slope</option>
+                          <option value='Mod'>Moderate Slope</option>
+                          <option value='Sev'>Severe Slope</option>
+                      </Select>
+                  </td>
+              </tr>
+
+              <tr>
+                  <td><label class='select_label'>Condition2: Proximity to various conditions (if more than one is present)</label></td>
+                  <td>
+                      <Select id='Condition2' name='three_story'>
+                            <option value='Gtl'>Gentle slope</option>
+                          <option value='Mod'>Moderate Slope</option>
+                          <option value='Sev'>Severe Slope</option>
+                      </Select>
+                  </td>
+              </tr>
+
+
+              <tr>
+                  <td><label class='select_label'>BldgType: Type of dwelling</label></td>
+                  <td>
+                      <Select id='BldgType' name='three_story'>
+                            <option value='1Fam'>Single-family Detached</option>
+                          <option value='2FmCon'>Two-family Conversion; originally built as one-family dwelling</option>
+                          <option value='Duplx'>Duplex</option>
+                          <option value='TwnhsE'>Townhouse End Unit</option>
+                          <option value='TwnhsI'>Townhouse Inside Unit</option>
+                      </Select>
+                  </td>
+              </tr>
+
+              <tr>
+                  <td><label class='select_label'>HouseStyle: Style of dwelling</label></td>
+                  <td>
+                      <Select id='HouseStyle' name='three_story'>
+                            <option value='1Story'>One story</option>
+                          <option value='1.1.5Fin'>One and one-half story: 2nd level finished</option>
+                          <option value='1.5Unf'>One and one-half story: 2nd level unfinished</option>
+                          <option value='2Story'>Two story</option>
+                          <option value='2.5Fin'>Two and one-half story: 2nd level finished</option>
+                          <option value='2.5Unf'>Two and one-half story: 2nd level unfinished</option>
+                           <option value='SFoyer'>Split Foyer</option>
+                           <option value='SLvl'>Split Level</option>
+
+                      </Select>
+                  </td>
+              </tr>
+
+               <tr>
+                  <td><label class='select_label'>OverallQual: Rates the overall material and finish of the house</label></td>
+                  <td>
+                      <Select id='OverallQual' name='three_story'>
+                            <option value='Gtl'>Very Excellent</option>
+                          <option value='Mod'>Excellent</option>
+                          <option value='Sev'>Very Good</option>
+                          <option value='Sev'>Good</option>
+                          <option value='Sev'>Above Average</option>
+                          <option value='Sev'>Average</option>
+                          <option value='Sev'>Below Average</option>
+                          <option value='Sev'>Fair</option>
+                          <option value='Sev'>Poor</option>
+                          <option value='Sev'>Very Poor</option>
+                      </Select>
+                  </td>
+              </tr>
+
+               <tr>
+                  <td><label class='select_label'>OverallCond: Rates the overall condition of the house</label></td>
+                  <td>
+                      <Select id='OverallCond' name='three_story'>
+                            <option value='Gtl'>Very Excellent</option>
+                          <option value='Mod'>Excellent</option>
+                          <option value='Sev'>Very Good</option>
+                          <option value='Sev'>Good</option>
+                          <option value='Sev'>Above Average</option>
+                          <option value='Sev'>Average</option>
+                          <option value='Sev'>Below Average</option>
+                          <option value='Sev'>Fair</option>
+                          <option value='Sev'>Poor</option>
+                          <option value='Sev'>Very Poor</option>
+                      </Select>
+                  </td>
+              </tr>
+
+
+              <tr>
+                  <td><label>YearBuilt: Original construction date</label><br>
+                  <td><input type="number" placeholder="Enter Lotsize here" id='YearBuilt' name='YearBuilt'><br></td>
+              </tr>
+
+
+               <tr>
+                  <td> <label>YearRemodAdd: Remodel date (same as construction date if no remodeling or additions)</label><br></td>
+                  <td><input type="number" placeholder="No. of Bedrooms" id='YearRemodAdd' name='YearRemodAdd'><br></td>
+              </tr>
+
+                <tr>
+                  <td><label class='select_label'>RoofStyle: Type of roof</label></td>
+                  <td>
+                      <Select id='RoofStyle' name='three_story'>
+                            <option value='Gtl'>Flat</option>
+                          <option value='Mod'>Gable</option>
+                          <option value='Sev'>Gabrel (Barn)</option>
+                          <option value='Sev'>Hip</option>
+                          <option value='Sev'>Above Average</option>
+                          <option value='Sev'>Mansard</option>
+                          <option value='Sev'>Below Average</option>
+                          <option value='Sev'>Shed</option>
+                          <option value='Sev'>Poor</option>
+                          <option value='Sev'>Very Poor</option>
+                      </Select>
+                  </td>
+              </tr>
+
+               <tr>
+                  <td><label class='select_label'>RoofMatl: Roof material</label></td>
+                  <td>
+                      <Select id='RoofMatl' name='three_story'>
+                            <option value='Gtl'>Clay or Tile</option>
+                          <option value='Mod'>Standard (Composite) Shingle</option>
+                          <option value='Sev'>Membrane</option>
+                          <option value='Sev'>Metal</option>
+                          <option value='Sev'>Roll</option>
+                          <option value='Sev'>Gravel & Tar</option>
+                          <option value='Sev'>Wood Shakes</option>
+                          <option value='Sev'>Wood Shingles</option>
+                      </Select>
+                  </td>
+              </tr>
+
+               <tr>
+                  <td><label class='select_label'>Exterior1st: Exterior covering on house</label></td>
+                  <td>
+                      <Select id='Exterior1st' name='three_story'>
+                            <option value='AsbShng'>Asbestos Shingles</option>
+                          <option value='AsphShn'>Asphalt Shingles</option>
+                          <option value='BrkComm'>Brick Common</option>
+                          <option value='BrkFace'>Brick Face</option>
+                          <option value='CBlock'>Cinder Block</option>
+                          <option value='CemntBd'>Cement Board</option>
+                          <option value='HdBoard'>Hard Board</option>
+                          <option value='ImStucc'>Imitation Stucco</option>
+                          <option value='MetalSd'>Metal Siding</option>
+                          <option value='Other'>Other</option>
+                          <option value='Plywoood'>Plywood</option>
+                          <option value='PreCast'>PreCast</option>
+                          <option value='Stone'>Stone</option>
+                          <option value='Stucco'>Stucco</option>
+                          <option value='VinylSd'>Vinyl Siding</option>
+                          <option value='Wd Sdng'>Wood Siding</option>
+                          <option value='WdShing'>Wood Shingles</option>
+                      </Select>
+                  </td>
+              </tr>
+
+               <tr>
+                  <td><label class='select_label'>Exterior2nd: Exterior covering on house (if more than one material)</label></td>
+                  <td>
+                      <Select id='Exterior2nd' name='three_story'>
+                            <option value='AsbShng'>Asbestos Shingles</option>
+                          <option value='AsphShn'>Asphalt Shingles</option>
+                          <option value='BrkComm'>Brick Common</option>
+                          <option value='BrkFace'>Brick Face</option>
+                          <option value='CBlock'>Cinder Block</option>
+                          <option value='CemntBd'>Cement Board</option>
+                          <option value='HdBoard'>Hard Board</option>
+                          <option value='ImStucc'>Imitation Stucco</option>
+                          <option value='MetalSd'>Metal Siding</option>
+                          <option value='Other'>Other</option>
+                          <option value='Plywoood'>Plywood</option>
+                          <option value='PreCast'>PreCast</option>
+                          <option value='Stone'>Stone</option>
+                          <option value='Stucco'>Stucco</option>
+                          <option value='VinylSd'>Vinyl Siding</option>
+                          <option value='Wd Sdng'>Wood Siding</option>
+                          <option value='WdShing'>Wood Shingles</option>
+                      </Select>
+                  </td>
+              </tr>
+
+               <tr>
+                  <td><label class='select_label'>MasVnrType: Masonry veneer type</label></td>
+                  <td>
+                      <Select id='MasVnrType' name='three_story'>
+                            <option value='BrkCmn'>Brick Common</option>
+                          <option value='BrkFace'>Brick Face</option>
+                          <option value='CBlock'>Cinder Block</option>
+                          <option value='None'>None</option>
+                          <option value='Stone'>Stone</option>
+                      </Select>
+                  </td>
+              </tr>
+
+               <tr>
+                  <td> <label>MasVnrArea: Masonry veneer area in square feet</label><br></td>
+                  <td><input type="number" placeholder="No. of Bathrooms" id='MasVnrArea' name='MasVnrArea'><br></td>
+              </tr>
+
+               <tr>
+                  <td><label class='select_label'>ExterQual: Evaluates the quality of the material on the exterior</label></td>
+                  <td>
+                      <Select id='ExterQual' name='three_story'>
+                            <option value='Ex'>Excellent</option>
+                          <option value='Gd'>Good</option>
+                          <option value='TA'>Average/Typical</option>
+                          <option value='Fa'>Fair</option>
+                          <option value='Po'>Poor</option>
+                      </Select>
+                  </td>
+              </tr>
+
+               <tr>
+                  <td><label class='select_label'>ExterCond: Evaluates the present condition of the material on the exterior</label></td>
+                  <td>
+                      <Select id='ExterCond' name='three_story'>
+                            <option value='Ex'>Excellent</option>
+                          <option value='Gd'>Good</option>
+                          <option value='TA'>Average/Typical</option>
+                          <option value='Fa'>Fair</option>
+                          <option value='Po'>Poor</option>
+                      </Select>
+                  </td>
+              </tr>
+
+                <tr>
+                  <td><label class='select_label'>Foundation: Type of foundation</label></td>
+                  <td>
+                      <Select id='Foundation' name='three_story'>
+                            <option value='BrkTil'>Brick & Tile</option>
+                          <option value='CBlock'>Cinder Block</option>
+                          <option value='PConc'>Poured Contrete</option>
+                          <option value='Slab'>Slab</option>
+                          <option value='Stone'>Stone</option>
+                          <option value='Wood'>Wood</option>
+                      </Select>
+                  </td>
+                </tr>
+
+              <tr>
+                  <td><label class='select_label'>BsmtQual: Evaluates the height of the basement</label></td>
+                  <td>
+                      <Select id='BsmtQual' name='three_story'>
+                            <option value='Ex'>Excellent (100+ inches)</option>
+                          <option value='Gd'>Good (90-99 inches)</option>
+                          <option value='TA'>Typical (80-89 inches)</option>
+                          <option value='Fa'>Fair (70-79 inches)</option>
+                          <option value='Po'>Poor (<70 inches)</option>
+                          <option value='NA'>No Basement</option>
+                      </Select>
+                  </td>
+                </tr>
+
+
+              <tr>
+                  <td><label class='select_label'>BsmtCond: Evaluates the general condition of the basement</label></td>
+                  <td>
+                      <Select id='BsmtCond' name='three_story'>
+                            <option value='Ex'>Excellent</option>
+                          <option value='Gd'>Good</option>
+                          <option value='TA'>Typical - slight dampness allowed</option>
+                          <option value='Fa'>Fair - dampness or some cracking or settling</option>
+                          <option value='Po'>Poor - Severe cracking, settling, or wetness</option>
+                          <option value='NA'>No Basement</option>
+                      </Select>
+                  </td>
+                </tr>
+
+              <tr>
+                  <td><label class='select_label'>BsmtExposure: Refers to walkout or garden level walls</label></td>
+                  <td>
+                      <Select id='BsmtExposure' name='three_story'>
+                            <option value='Gd'>Good Exposure</option>
+                          <option value='Av'>Average Exposure (split levels or foyers typically score average or above)</option>
+                          <option value='Mn'>Mimimum Exposure</option>
+                          <option value='No'>No Exposure</option>
+                          <option value='NA'>No Basement</option>
+                      </Select>
+                  </td>
+                </tr>
+
+
+              <tr>
+                  <td><label class='select_label'>BsmtFinType1: Rating of basement finished area</label></td>
+                  <td>
+                      <Select id='BsmtFinType1' name='three_story'>
+                            <option value='GLQ'>Good Living Quarters</option>
+                          <option value='ALQ'>Average Living Quarters</option>
+                          <option value='BLQ'>Below Average Living Quarters</option>
+                          <option value='Rec'>Average Rec Room</option>
+                          <option value='LwQ'>Low Quality</option>
+                          <option value='Unf'>Unfinshed</option>
+                          <option value='NA'>No Basement</option>
+                      </Select>
+                  </td>
+                </tr>
+
+              <tr>
+                  <td> <label>BsmtFinSF1: Type 1 finished square feet</label><br></td>
+                  <td><input type="number" placeholder="No. of Bathrooms" id='BsmtFinSF1' name='BsmtFinSF1'><br></td>
+              </tr>
+
+              <tr>
+                  <td><label class='select_label'>BsmtFinType2: Rating of basement finished area (if multiple types)</label></td>
+                  <td>
+                      <Select id='BsmtFinType2' name='three_story'>
+                            <option value='GLQ'>Good Living Quarters</option>
+                          <option value='ALQ'>Average Living Quarters</option>
+                          <option value='BLQ'>Below Average Living Quarters</option>
+                          <option value='Rec'>Average Rec Room</option>
+                          <option value='LwQ'>Low Quality</option>
+                          <option value='Unf'>Unfinshed</option>
+                          <option value='NA'>No Basement</option>
+                      </Select>
+                  </td>
+                </tr>
+
+              <tr>
+                  <td> <label>BsmtFinSF2: Type 2 finished square feet</label><br></td>
+                  <td><input type="number" placeholder="No. of Bathrooms" id='BsmtFinSF2' name='BsmtFinSF2'><br></td>
+              </tr>
+
+               <tr>
+                  <td> <label>BsmtUnfSF: Unfinished square feet of basement area</label><br></td>
+                  <td><input type="number" placeholder="No. of Bathrooms" id='BsmtUnfSF' name='BsmtUnfSF'><br></td>
+              </tr>
+
+               <tr>
+                  <td> <label>TotalBsmtSF: Total square feet of basement area</label><br></td>
+                  <td><input type="number" placeholder="No. of Bathrooms" id='TotalBsmtSF' name='TotalBsmtSF'><br></td>
+              </tr>
+
+               <tr>
+                  <td><label class='select_label'>HeatingQC: Heating quality and condition</label></td>
+                  <td>
+                      <Select id='HeatingQC' name='three_story'>
+                            <option value='Ex'>Excellent</option>
+                          <option value='Gd'>Good</option>
+                          <option value='TA'>Average/Typical</option>
+                          <option value='Fa'>Fair</option>
+                          <option value='Po'>Poor</option>
+                      </Select>
+                  </td>
+              </tr>
+
+              <tr>
+                  <td><label class='select_label'>CentralAir: Central air conditioning</label></td>
+                  <td>
+                      <Select id='CentralAir' name='three_story'>
+                            <option value='N'>No</option>
+                            <option value='Y'>Yes</option>
+                      </Select>
+                  </td>
+              </tr>
+
+               <tr>
+                  <td> <label>1stFlrSF: First Floor square feet</label><br></td>
+                  <td><input type="number" placeholder="No. of Bathrooms" id='1stFlrSF' name='1stFlrSF'><br></td>
+              </tr>
+
+              <tr>
+                  <td> <label>2ndFlrSF: Second floor square feet</label><br></td>
+                  <td><input type="number" placeholder="No. of Bathrooms" id='2ndFlrSF' name='FlrSF'><br></td>
+              </tr>
+
+               <tr>
+                  <td> <label>LowQualFinSF: Low quality finished square feet (all floors)</label><br></td>
+                  <td><input type="number" placeholder="No. of Bathrooms" id='LowQualFinSF' name='LowQualFinSF'><br></td>
+              </tr>
+
+              <tr>
+                  <td> <label>GrLivArea: Above grade (ground) living area square feet</label><br></td>
+                  <td><input type="number" placeholder="No. of Bathrooms" id='GrLivArea' name='GrLivArea'><br></td>
+              </tr>
+
+               <tr>
+                  <td> <label>BsmtFullBath: Basement full bathrooms</label><br></td>
+                  <td><input type="number" placeholder="No. of Bathrooms" id='BsmtFullBath' name='BsmtFullBath'><br></td>
+              </tr>
+
+              <tr>
+                  <td> <label>BsmtHalfBath: Basement half bathrooms</label><br></td>
+                  <td><input type="number" placeholder="No. of Bathrooms" id='BsmtHalfBath' name='BsmtHalfBath'><br></td>
+              </tr>
+
+              <tr>
+                  <td> <label>FullBath: Full bathrooms above grade</label><br></td>
+                  <td><input type="number" placeholder="No. of Bathrooms" id='FullBath' name='FullBath'><br></td>
+              </tr>
+
+              <tr>
+                  <td> <label>HalfBath: Half baths above grade</label><br></td>
+                  <td><input type="number" placeholder="No. of Bathrooms" id='HalfBath' name='HalfBath'><br></td>
+              </tr>
+
+              <tr>
+                  <td> <label>Bedroom: Bedrooms above grade (does NOT include basement bedrooms)</label><br></td>
+                  <td><input type="number" placeholder="No. of Bathrooms" id='Bedroom' name='Bedroom'><br></td>
+              </tr>
+
+              <tr>
+                  <td> <label>Kitchen: Kitchens above grade</label><br></td>
+                  <td><input type="number" placeholder="No. of Bathrooms" id='Kitchen' name='Kitchen'><br></td>
+              </tr>
+
+
+              <tr>
+                  <td><label class='select_label'>Electrical: Electrical system</label></td>
+                  <td>
+                      <Select id='Electrical' name='three_story'>
+                            <option value='SBrkr'>Standard Circuit Breakers & Romex</option>
+                          <option value='FuseA'>Fuse Box over 60 AMP and all Romex wiring (Average)</option>
+                          <option value='FuseF'>60 AMP Fuse Box and mostly Romex wiring (Fair)</option>
+                          <option value='FuseP'>60 AMP Fuse Box and mostly knob & tube wiring (poor)</option>
+                          <option value='Mix'>Mixed</option>
+                      </Select>
+                  </td>
+              </tr>
+
+              <tr>
+                  <td><label class='select_label'>KitchenQual: Kitchen quality</label></td>
+                  <td>
+                      <Select id='KitchenQual' name='three_story'>
+                            <option value='Ex'>Excellent</option>
+                          <option value='Gd'>Good</option>
+                          <option value='TA'>Average/Typical</option>
+                          <option value='Fa'>Fair</option>
+                          <option value='Po'>Poor</option>
+                      </Select>
+                  </td>
+              </tr>
+
+              <tr>
+                  <td> <label>TotRmsAbvGrd: Total rooms above grade (does not include bathrooms)</label><br></td>
+                  <td><input type="number" placeholder="No. of Bathrooms" id='TotRmsAbvGrd' name='TotRmsAbvGrd'><br></td>
+              </tr>
+
+               <tr>
+                  <td><label class='select_label'>Functional: Home functionality (Assume typical unless deductions are warranted)</label></td>
+                  <td>
+                      <Select id='Functional' name='three_story'>
+                            <option value='Typ'>Typical Functionality</option>
+                          <option value='Min1'>Minor Deductions 1</option>
+                          <option value='Min2'>Minor Deductions 2</option>
+                          <option value='Mod'>Moderate Deductions</option>
+                          <option value='Maj1'>Major Deductions 1</option>
+                          <option value='Maj2'>Major Deductions 2</option>
+                          <option value='Sev'>Severely Damaged</option>
+                          <option value='Sal'>Salvage only</option>
+                      </Select>
+                  </td>
+              </tr>
+
+               <tr>
+                  <td> <label>Fireplaces: Number of fireplaces</label><br></td>
+                  <td><input type="number" placeholder="No. of Bathrooms" id='Fireplaces' name='Fireplaces'><br></td>
+              </tr>
+
+
+              <tr>
+                  <td><label class='select_label'>FireplaceQu: Fireplace quality</label></td>
+                  <td>
+                      <Select id='FireplaceQu' name='three_story'>
+                            <option value='Ex'>Excellent - Exceptional Masonry Fireplace</option>
+                          <option value='Gd'>Good - Masonry Fireplace in main level</option>
+                          <option value='TA'>Average - Prefabricated Fireplace in main living area or Masonry Fireplace in basement</option>
+                          <option value='Fa'>Fair - Prefabricated Fireplace in basement</option>
+                          <option value='Po'>Poor - Ben Franklin Stove</option>
+                          <option value='NA'>No Fireplace</option>
+                      </Select>
+                  </td>
+              </tr>
+
+              <tr>
+                  <td><label class='select_label'>GarageType: Garage location</label></td>
+                  <td>
+                      <Select id='GarageType' name='three_story'>
+                            <option value='Ex'>More than one type of garage</option>
+                          <option value='Gd'>Attached to home</option>
+                          <option value='TA'>Basement Garage</option>
+                          <option value='Fa'>Built-In (Garage part of house - typically has room above garage)</option>
+                          <option value='Po'>Car Port</option>
+                          <option value='NA'>Detached from home</option>
+                          <option value='NA'>No Garage</option>
+                      </Select>
+                  </td>
+              </tr>
+
+
+              <tr>
+                  <td> <label>GarageYrBlt: Year garage was built</label><br></td>
+                  <td><input type="number" placeholder="No. of Bathrooms" id='GarageYrBlt' name='GarageYrBlt'><br></td>
+              </tr>
+
+              <tr>
+                  <td><label class='select_label'>GarageFinish: Interior finish of the garage</label></td>
+                  <td>
+                      <Select id='GarageFinish' name='three_story'>
+                            <option value='Fin'>Finished</option>
+                          <option value='RFn'>Rough Finished</option>
+                          <option value='Unf'>Unfinished</option>
+                          <option value='NA'>No Garage</option>
+                      </Select>
+                  </td>
+              </tr>
+
+              <tr>
+                  <td> <label>GarageCars: Size of garage in car capacity</label><br></td>
+                  <td><input type="number" placeholder="No. of Bathrooms" id='GarageCars' name='GarageCars'><br></td>
+              </tr>
+
+               <tr>
+                  <td> <label>GarageArea: Size of garage in square feet</label><br></td>
+                  <td><input type="number" placeholder="No. of Bathrooms" id='GarageArea' name='GarageArea'><br></td>
+              </tr>
+
+               <tr>
+                  <td><label class='select_label'>GarageQual: Garage quality</label></td>
+                  <td>
+                      <Select id='GarageQual' name='three_story'>
+                            <option value='Ex'>Excellent</option>
+                          <option value='Gd'>Good</option>
+                          <option value='TA'>Average/Typical</option>
+                          <option value='Fa'>Fair</option>
+                          <option value='Po'>Poor</option>
+                          <option value='NA'>No Garage</option>
+                      </Select>
+                  </td>
+              </tr>
+
+              <tr>
+                  <td><label class='select_label'>GarageCond: Garage condition</label></td>
+                  <td>
+                      <Select id='GarageCond' name='three_story'>
+                            <option value='Ex'>Excellent</option>
+                          <option value='Gd'>Good</option>
+                          <option value='TA'>Average/Typical</option>
+                          <option value='Fa'>Fair</option>
+                          <option value='Po'>Poor</option>
+                          <option value='NA'>No Garage</option>
+                      </Select>
+                  </td>
+              </tr>
+
+              <tr>
+                  <td><label class='select_label'>PavedDrive: Paved driveway</label></td>
+                  <td>
+                      <Select id='PavedDrive' name='three_story'>
+                            <option value='Y'>Paved</option>
+                          <option value='P'>Partial Pavement</option>
+                          <option value='N'>Dirt/Gravel</option>
+                      </Select>
+                  </td>
+              </tr>
+
+              <tr>
+                  <td> <label>WoodDeckSF: Wood deck area in square feet</label><br></td>
+                  <td><input type="number" placeholder="No. of Bathrooms" id='WoodDeckSF' name='WoodDeckSF'><br></td>
+              </tr>
+
+              <tr>
+                  <td> <label>OpenPorchSF: Open porch area in square feet</label><br></td>
+                  <td><input type="number" placeholder="No. of Bathrooms" id='OpenPorchSF' name='OpenPorchSF'><br></td>
+              </tr>
+
+              <tr>
+                  <td> <label>EnclosedPorch: Enclosed porch area in square feet</label><br></td>
+                  <td><input type="number" placeholder="No. of Bathrooms" id='EnclosedPorch' name='EnclosedPorch'><br></td>
+              </tr>
+
+              <tr>
+                  <td> <label>3SsnPorch: Three season porch area in square feet</label><br></td>
+                  <td><input type="number" placeholder="No. of Bathrooms" id='3SsnPorch' name='3SsnPorch'><br></td>
+              </tr>
+
+               <tr>
+                  <td> <label>ScreenPorch: Screen porch area in square feet</label><br></td>
+                  <td><input type="number" placeholder="No. of Bathrooms" id='ScreenPorch' name='ScreenPorch'><br></td>
+              </tr>
+
+              <tr>
+                  <td> <label>PoolArea: Pool area in square feet</label><br></td>
+                  <td><input type="number" placeholder="No. of Bathrooms" id='PoolArea' name='PoolArea'><br></td>
+              </tr>
+
+              <tr>
+                  <td><label class='select_label'>PoolQC: Pool quality</label></td>
+                  <td>
+                      <Select id='PoolQC' name='three_story'>
+                            <option value='Ex'>Excellent</option>
+                          <option value='Gd'>Good</option>
+                          <option value='TA'>Average/Typical</option>
+                          <option value='Fa'>Fair</option>
+                          <option value='NA'>No Pool</option>
+                      </Select>
+                  </td>
+              </tr>
+
+              <tr>
+                  <td><label class='select_label'>Fence: Fence quality</label></td>
+                  <td>
+                      <Select id='Fence' name='three_story'>
+                            <option value='GdPrv'>Good Privacy</option>
+                          <option value='MnPrv'>Minimum Privacy</option>
+                          <option value='GdWo'>Good Wood</option>
+                          <option value='MnWw'>Minimum Wood/Wire</option>
+                          <option value='NA'>No Fence</option>
+                      </Select>
+                  </td>
+              </tr>
+
+
+              <tr>
+                  <td><label class='select_label'>MiscFeature: Miscellaneous feature not covered in other categories</label></td>
+                  <td>
+                      <Select id='MiscFeature' name='three_story'>
+                            <option value='Elev'>Elevator</option>
+                          <option value='Gar2'>2nd Garage (if not described in garage section)</option>
+                          <option value='Othr'>Other</option>
+                          <option value='Shed'>Shed (over 100 SF)</option>
+                          <option value='TenC'>Tennis Court</option>
+                          <option value='NA'>None</option>
+                      </Select>
+                  </td>
+              </tr>
+
+              <tr>
+                  <td> <label>MiscVal: $Value of miscellaneous feature</label><br></td>
+                  <td><input type="number" placeholder="No. of Bathrooms" id='MiscVal' name='MiscVal'><br></td>
+              </tr>
+
+               <tr>
+                  <td> <label>MoSold: Month Sold (MM)</label><br></td>
+                  <td><input type="number" placeholder="No. of Bathrooms" id='MoSold' name='MoSold'><br></td>
+              </tr>
+
+              <tr>
+                  <td> <label>YrSold: Year Sold (YYYY)</label><br></td>
+                  <td><input type="number" placeholder="No. of Bathrooms" id='YrSold' name='YrSold'><br></td>
+              </tr>
+
+              <tr>
+                  <td><label class='select_label'>SaleType: Type of sale</label></td>
+                  <td>
+                      <Select id='SaleType' name='three_story'>
+                            <option value='WD'>Warranty Deed - Conventional</option>
+                          <option value='CWD'>Warranty Deed - Cash</option>
+                          <option value='VWD'>Warranty Deed - VA Loan</option>
+                          <option value='New'>Home just constructed and sold</option>
+                          <option value='COD'>Court Officer Deed/Estate</option>
+                           <option value='Con'>Contract 15% Down payment regular terms</option>
+                           <option value='ConLw'>Contract Low Down payment and low interest</option>
+                           <option value='ConLI'>Contract Low Interest</option>
+                           <option value='ConLD'>Contract Low Down</option>
+                          <option value='Oth'>Other</option>
+                      </Select>
+                  </td>
+              </tr>
+
+              <tr>
+                  <td><label class='select_label'>SaleCondition: Condition of sale</label></td>
+                  <td>
+                      <Select id='SaleCondition' name='three_story'>
+                            <option value='WD'>Normal Sale</option>
+                          <option value='CWD'>Abnormal Sale -  trade, foreclosure, short sale</option>
+                          <option value='VWD'>Adjoining Land Purchase</option>
+                          <option value='New'>Allocation - two linked properties with separate deeds, typically condo with a garage unit</option>
+                          <option value='COD'>Sale between family members</option>
+                          <option value='Con'>Home was not completed when last assessed (associated with New Homes)</option>
+                      </Select>
+                  </td>
+              </tr>
+
+          </table>
+
+               <button id=submitbtn type="submit" value="Submit">Submit</button><br>
+
+           </form>
+
+      </div>
+
+        <div id="graph">
+            <img id="im" src="../images/wall.jpg" width="200" height="200">
+            <button id="showg" type="submit" value="graph"></button>
+        </div>
+
+                    <div id=result1>
+                        <p>Knowing is not enough; we must apply. Willing is not enough; we must do</p>
+                </div>
+
+</div>
+
+
+    <!-- Scripts -->
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/popper.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.easing.min.js"></script>
+    <script src="../js/swiper.min.js"></script>
+    <script src="../js/jquery.magnific-popup.js"></script>
+    <script src="../js/validator.min.js"></script>
+    <script src="../js/scripts.js"></script>
+
+
+</body>
+</html>
